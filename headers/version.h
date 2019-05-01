@@ -28,12 +28,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef VERSION_H_
 #define VERSION_H_
 
-#define SC_VERSION "2.2.6"
-#define SC_DATE "12/25/2016"
+#define SC_VERSION "2.6.0"
+#define SC_DATE "05/01/2019"
 
 #define SC_HISTORY \
 "Revision History \n"\
-"2.2.6 12/25/2016\n"\
+"2.6.0 05/01/2019\n"\
+"- Worked through code and cleaned up so that it would compile with the standard set to gnu18.\n"\
+"- \n"\
+"2.5.1 12/25/2016\n"\
 "- Worked through code and cleaned up so that it would compile with the standard set to c11.\n"\
 "- Fixed various minor bugs.\n"\
 "- \n"\
