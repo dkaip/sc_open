@@ -337,7 +337,7 @@ static char value[128];
 
     DEBUG (3, DEBUG_HDR, "Called, options <%s>, option <%s>\n", options, option);
 
-    if ((ptr = strstr(options, option)) == '\0')
+    if ((ptr = strstr(options, option)) == 0)
     {
         /* ERROR ("Option not found <%s>, returning <\"\">\n", option);  */
         return "";

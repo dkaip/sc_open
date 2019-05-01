@@ -223,7 +223,7 @@ uint32_t recv_xml(const char *name, int fd, struct buffer *reply)
             else
             {
                 bufncat(reply, (char *)&c, 1);
-                if (strstr(bufdata(reply), tag) == '\0')
+                if (strstr(bufdata(reply), tag) == (char *)0)
                 {
                     /* Not found yet */
                 	;

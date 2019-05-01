@@ -61,10 +61,10 @@ void tune()
         return;
     }
 
-    while (fgets(buf, sizeof(buf), fp) != '\0')
+    while (fgets(buf, sizeof(buf), fp) != (char *)0)
     {
         /* Convert newline to null */
-        if ((p = strchr(buf, '\n')) != '\0')
+        if ((p = strchr(buf, '\n')) != (char *)0)
         {
             *p = '\0';
         }

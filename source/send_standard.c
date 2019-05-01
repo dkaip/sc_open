@@ -228,7 +228,7 @@ uint32_t recv_standard(const char *name, int fd, struct buffer *reply)
 
             DEBUG (3, DEBUG_HDR, "Read <%s>\n", bufdata(reply));
             if (strlen(rcv_eol)) {
-                if (strstr(bufdata(reply), rcv_eol) == '\0')
+                if (strstr(bufdata(reply), rcv_eol) == (char *)0)
                 {
                     continue;  /* Not found yet */
                 }

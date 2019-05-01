@@ -439,7 +439,7 @@ void tmp_variable_dump(struct buffer *buffer, const char *variable)
         /*     continue; */
         	;
         }
-        else if (strstr(variable_root[i].name, variable) != '\0')
+        else if (strstr(variable_root[i].name, variable) != (char *)0)
         {
             bufcat(buffer, "           ");
             bufcat(buffer, variable_root[i].name);

@@ -674,7 +674,7 @@ static void read_it(char *file_in, char *buf, char *macro_name, bool pp_flag, bo
 
     if (strlen(file_in))
     {
-        strncpy(file, file_in, sizeof(file));
+        strncpy(file, file_in, sizeof(file) - 1);
         if (first_time_flag)
         {
             /* Program file, not an include file */
@@ -719,7 +719,7 @@ static void read_it(char *file_in, char *buf, char *macro_name, bool pp_flag, bo
                             }
                             else
                             {
-                                strncpy(file, bufdata(&token), sizeof(file));
+                                strncpy(file, bufdata(&token), sizeof(file) - 1);
                                 break;  /* Done, so quit */
                             }
                         }

@@ -700,7 +700,7 @@ uint32_t secs_encode(struct binary_buffer *buffer, uint32_t *stream, uint32_t *f
                     }
    
                     temp_ptr = bufdata(&token);
-                    while (temp_ptr != '\0')
+                    while (temp_ptr != (char *)NULL)
                     {
                         /* See if this is in \xhh..hh format */
 
@@ -778,7 +778,7 @@ uint32_t secs_encode(struct binary_buffer *buffer, uint32_t *stream, uint32_t *f
                     }
    
                     temp_ptr = bufdata(&token);
-                    while (temp_ptr != '\0')
+                    while (temp_ptr != (char *)NULL)
                     {
                         /* See if this is in \xhh..hh format */
 

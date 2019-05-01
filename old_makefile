@@ -1,0 +1,141 @@
+# sc - Station Controller
+# Copyright (C) 2005 
+# Written by John F. Poirier DBA Edge Integration
+# 
+# Contact information:
+#     john@edgeintegration.com
+# 
+#     Edge Integration
+#     885 North Main Street
+#     Raynham MA, 02767
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+HP_FLAGS = -Aa -DUNIX -DHP -DSYS5 -DHP700V807 -DHP9000v901 -DHP903 -DHP904 -D_HPUX_SOURCE 
+
+# Select the CFLAGS from below
+
+# For Linux/Windows use this:
+#CFLAGS = -ansi -DPC_HW -I/usr/include -I. 
+#CFLAGS = -DPC_HW -I/usr/include -I. -Wall
+CFLAGS = -std=c11 -I/usr/include -I. -Wall
+CFLAGS2 = -std=gnu11 -D_POSIX_C_SOURCE -D_POSIX_SOURCE -D__USE_POSIX2 -D__USE_POSIX -I/usr/include -I. -Wall
+
+# For Linux/Windows 486 compatability more:
+#CFLAGS = -DPC_HW -m486 -I/usr/include -I. 
+
+# For Unix use this:
+#CFLAGS = $(HP_FLAGS) -Wp,-H20000 -I/usr/include -I. 
+
+LIBDIR = 
+LIBS   = 
+
+HEADERS = 
+
+OBJS = \
+    sc.o \
+    break.o \
+    buffer.o \
+    commands.o \
+    continue.o \
+    convert_data.o \
+    define.o \
+    define_array.o \
+    define_xref.o \
+    delete.o \
+    debug.o \
+    error.o \
+    pp_error.o \
+    resume.o \
+    execute.o \
+    expression.o \
+    fatal.o \
+    for.o \
+    gosub.o \
+    goto.o \
+    handler.o \
+    hsms.o \
+    if.o \
+    io.o \
+    label.o \
+    let.o \
+    local_var.o \
+    log.o \
+    open.o \
+    parse.o \
+    port.o \
+    pragma.o \
+    print.o \
+    program.o \
+    proto.o \
+    secs_decode_sml.o \
+    secs_decode_sml_no_arrays.o \
+    secs_encode_sml.o \
+    recv_hsms.o \
+    recv_secs.o \
+    secs.o \
+    send.o \
+    send_hsms.o \
+    send_secs.o \
+    send_standard.o \
+    send_xml.o \
+    sleep.o \
+    server.o \
+    sockets.o \
+    stubs.o \
+    swap.o \
+    syntax.o \
+    timers.o \
+    trace.o \
+    tune.o \
+    proto_timers.o \
+    tokens.o \
+    variables.o \
+    tmp_variables.o \
+    utility.o \
+    while.o \
+    warning.o 
+
+help:
+	# don't forget to edit makefile for platform 
+	# make sc
+	# make all    - Force recompile of object files 
+	# make t.test - Test program
+	# make clean  - Remove extra fils
+
+sc: $(OBJS) $(HEADERS)
+	$(CC) -o sc $(OBJS) /usr/lib64/libm.so $(LIBS) $(LIBS)
+
+all:
+	touch x.o
+	rm *.o
+	make sc
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+list:
+	pr makefile *.h *.c > sc.txt
+
+t.test: t.test.src
+	cpp -E -P t.test.src > t.test
+
+clean:
+	rm -f *.o
+	rm -f *.exe
+
+debug:
+	strings sc.exe | grep ".c::" > sc.debug
+

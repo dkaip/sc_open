@@ -361,7 +361,7 @@ struct buffer valu = INIT_BUFFER;
 
         /* Temporarily replace the $'s with \xff.  They will be replace below. 
            By doing so here, the $'s within a value will not be intrepreted as another variable. */
-        while (strchr(bufdata(&valu), '$') != '\0')
+        while (strchr(bufdata(&valu), '$') != (char *)0)
         {
             *strchr(bufdata(&valu), '$') = '\xff';
         }
@@ -378,7 +378,7 @@ struct buffer valu = INIT_BUFFER;
     DEBUG (4, DEBUG_HDR, "Token <%s>\n", bufdata(token));
 
     /* Now convert the \xff (from above) back to $'s */
-    while (strchr(bufdata(token), '\xff') != '\0')
+    while (strchr(bufdata(token), '\xff') != (char *)0)
     {
         *strchr(bufdata(token), '\xff') = '$';
     }

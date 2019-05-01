@@ -595,7 +595,7 @@ void variable_dump(struct buffer *buffer, char *variable)
 //
 //        }
 //        else if (strstr(variable_root[i].name, variable) != '\0')
-        if (strstr(variable_root[i].name, variable) != '\0')
+        if (strstr(variable_root[i].name, variable) != (char *)0)
         {
             sprintf(tmp, "%8s", show_var_type(variable_root[i].type));
             /* bufcat(buffer, show_var_type(variable_root[i].type)); */

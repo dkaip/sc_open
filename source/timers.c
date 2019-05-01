@@ -129,7 +129,7 @@ uint32_t cmd_start_timer()
             if (type == TT_ASSIGN)
             {
                 get_program_token(&token, &type);    
-                strncpy(handler, bufdata(&token), sizeof(handler));
+                strncpy(handler, bufdata(&token), sizeof(handler) - 1);
             }
             else
             {

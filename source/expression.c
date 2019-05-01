@@ -868,7 +868,7 @@ static uint32_t solve_function(struct buffer *token)
     }
     else if (type == TT_GET_ENV)
     {
-        if (getenv(bufdata(&arg0)) == '\0')
+        if (getenv(bufdata(&arg0)) == (char *)NULL)
         {
             bufcpy(token, "");
    
@@ -1259,14 +1259,14 @@ static uint32_t solve_function(struct buffer *token)
         {  /* Only one arg */
             bufcat(&arg0, " 2>&1");  /* Append redirection of stderr to stdout */
             fp = (FILE *) popen(bufdata(&arg0), "r");
-            if (fp == '\0')
+            if (fp == (FILE *)NULL)
             {
                 ERROR ("Can't get reply from system command <%s>\n", bufdata(&arg0));
                 bufcpy(token, "");
                 iret = 1;
             }
             bufcpy(token, "");
-            while ((fgets(buf, sizeof(buf), fp) != '\0'))
+            while ((fgets(buf, sizeof(buf), fp) != (char *)NULL))
             {
                 data_to_char(token, buf, (uint32_t)strlen(buf));  /* Convert data chars to regular chars */
             } 
@@ -1292,7 +1292,7 @@ static uint32_t solve_function(struct buffer *token)
         {  /* 2 args */
             bufcat(&arg1, " 2>&1");  /* Append redirection of stderr to stdout */
             fp = (FILE *) popen(bufdata(&arg1), "r");
-            if (fp == '\0')
+            if (fp == (FILE *)NULL)
             {
                 ERROR ("Can't get reply from system command <%s>\n", bufdata(&arg1));
                 bufcpy(token, "");
@@ -1301,7 +1301,7 @@ static uint32_t solve_function(struct buffer *token)
 
             bufcpy(token, "");
             buf[0] = 0;
-            while ((fgets(buf, sizeof(buf), fp) != '\0'))
+            while ((fgets(buf, sizeof(buf), fp) != (char *)NULL))
             {
                 data_to_char(token, buf, (uint32_t)strlen(buf));  /* Convert data chars to regular chars */
             } 
@@ -1447,12 +1447,12 @@ static uint32_t solve_function(struct buffer *token)
     else if (type == TT_EXPORT)
     {
         flag = false;  /* binary flag */
-        if (strchr(bufdata(&arg1), 'b') != '\0')
+        if (strchr(bufdata(&arg1), 'b') != (char *)NULL)
         {  /* Check if binary data */
             flag = true;  /* This is binary data */
         }
 
-        if ((fp = fopen(bufdata(&arg2), bufdata(&arg1))) == '\0')
+        if ((fp = fopen(bufdata(&arg2), bufdata(&arg1))) == 0)
         {
             ERROR ("Can't open file <%s>\n", bufdata(&arg2));
             iret = 1;
@@ -1488,7 +1488,7 @@ static uint32_t solve_function(struct buffer *token)
     else if (type == TT_FILE_OWC)
     {
         fp = 0;
-        if ((fp = fopen(bufdata(&arg2), bufdata(&arg1))) == '\0')
+        if ((fp = fopen(bufdata(&arg2), bufdata(&arg1))) == 0)
         {
             ERROR ("Can't open file <%s>\n", bufdata(&arg2));
             iret = 1;
@@ -1520,7 +1520,7 @@ static uint32_t solve_function(struct buffer *token)
     else if (type == TT_FILE_OPEN)
     {
         fp = (FILE *)NULL;
-        if ((fp = fopen(bufdata(&arg1), bufdata(&arg0))) == '\0')
+        if ((fp = fopen(bufdata(&arg1), bufdata(&arg0))) == 0)
         {
             ERROR ("Can't open file <%s>\n", bufdata(&arg1));
             iret = 1;
@@ -1576,7 +1576,7 @@ static uint32_t solve_function(struct buffer *token)
         if (bufsize(&arg2))
         {  /* 3 arguments */
             p = strtok(bufdata(&arg2), bufdata(&arg1));
-            while(p != '\0')
+            while(p != (char *)NULL)
             {
                 j++;
                 sprintf(num_buf, "[%d]", j);
@@ -1590,7 +1590,7 @@ static uint32_t solve_function(struct buffer *token)
         else
         {  /* Only 2 arguments, only get the count */
             p = strtok(bufdata(&arg1), bufdata(&arg0));
-            while(p != '\0')
+            while(p != (char *)NULL)
             {
                 j++;
                 p = strtok('\0', bufdata(&arg0));
@@ -1607,7 +1607,7 @@ static uint32_t solve_function(struct buffer *token)
         j = 0;
         bufcpy(token, "");
         p = strtok(bufdata(&arg2), bufdata(&arg1));
-        while(p != '\0')
+        while(p != (char *)NULL)
         {
             j++;
             sprintf(num_buf, "[%d]", j);
@@ -2187,7 +2187,7 @@ static void q_free()
 
     for (int i=0; i<MAX_Q; i++)
     {
-        if (q_of_tokens[i] != '\0')
+        if (q_of_tokens[i] != (char *)NULL)
         {
             free(q_of_tokens[i]);
         }
