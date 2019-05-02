@@ -1,6 +1,6 @@
-# jvulkan-natives-Linux-x86_64
+# sc_open
 
-**jvulkan-natives-Linux-x86_64** is a native library written in c++ that is used (required) by the 
+**sc_open** is a native library written in c++ that is used (required) by the 
 [jvulkan](https://github.com/dkaip/jvulkan) (Java Vulkan SDK) project.  This project provides the interface between **jvulkan** 
 and the [Vulkan® SDK](https://www.lunarg.com/vulkan-sdk/) from LUNARG which is written in c++.
 
@@ -16,9 +16,9 @@ Additionally you may just be able to download it from [freedesktop.org](https://
 ## Get the code
 Use the <code>git clone</code> command to get the code. 
 
-<code>git https://github.com/dkaip/jvulkan-natives-Linux-x86_64 jvulkan-natives-Linux-x86_64</code> 
+<code>git https://github.com/dkaip/sc_open sc_open</code> 
 
-This will create a <code>jvulkan-natives-Linux-x86_64</code> directory in your current directory
+This will create a <code>sc_open</code> directory in your current directory
 
 
 ## Building
