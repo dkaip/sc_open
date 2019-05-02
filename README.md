@@ -1,17 +1,38 @@
 # sc_open
 
-**sc_open** is a native library written in c++ that is used (required) by the 
-[jvulkan](https://github.com/dkaip/jvulkan) (Java Vulkan SDK) project.  This project provides the interface between **jvulkan** 
-and the [Vulkan® SDK](https://www.lunarg.com/vulkan-sdk/) from LUNARG which is written in c++.
+**sc_open** is the Station Controller (sc) application originally created by 
+John F. Poirier DBA Edge Integration circa early this century or late in the previous one. 
+It has been updated to run properly in 64-bit software environments.
 
-## Prerequisites
-You will need the [Vulkan® SDK](https://www.lunarg.com/vulkan-sdk/) from LUNARG.  You will 
-need to download and build it.  If possible get the version <code>1.1.101.0</code>.  Later 
-**might** work as well.
+The primary purpose of this application is to be able to communicate with equiment that
+is on the factory floor in a semiconductor manufacturing facility.   If you do not work 
+in that industry or you are not familiar with the SEMI Standards E4, E5, E30, E37, 
+el al, this application is probably not for you.  
 
-You will also need the Wayland development code.  It may be in the package 
-<code>wayland-devel.x86\_64</code> and / or perhaps <code>libwayland-client.x86\_64</code>. 
-Additionally you may just be able to download it from [freedesktop.org](https://wayland.freedesktop.org/).
+This software functions well in development environments as well as production ones.  
+
+In a development environment this software enables quick and mostly painless 
+communications with equipment commonly found in a factory for making semiconductor 
+devices.  This communication is done primarily using the SECSII protocol transported via 
+either a SECSI or HSMS transport layer.  This application is a great tool to test out
+early operational scenarios with a piece of equipment and to generate log file(s).  The
+log files can usually be merged, with little to moderate work, with a program for 
+<code>sc</code> in order to 
+create an equipment simulator.  This created simulator is an invaluable tool for use 
+in the job of creating and debugging equipment interfaces developed in another 
+platform / software tool. In addition, once a tool is in production a <code>sc</code> 
+program can be created from production log files to allow a &quot;production&quot; equipment 
+interface to be run against a fake version of the tool for debugging purposes.  This 
+allows for testing / debugging without putting product at risk. 
+
+Two running instances of <code>sc</code> can communicate with each other.  This is sometimes 
+used to develop both a host and an equipment interface at the same time.
+
+In a production this application can be used to construct a robust automation layer for
+simpler CIM environments.  It is probably not going to be used in production in a 300mm or 
+450mm environment due to the massive amount of automation framework up and down the 
+application stack.
+
 
 ## Get the code
 Use the <code>git clone</code> command to get the code. 
@@ -23,21 +44,13 @@ This will create a <code>sc_open</code> directory in your current directory
 
 ## Building
 Change your current directory (<code>cd</code>) to the project root directory.  If you used the 
-command above it would be <code>cd jvulkan-natives-Linux-x86_64</code>.    
+command above it would be <code>cd sc_open</code>.    
 
 Edit the <code>CMakeLists.txt</code> file.</br>
-Alter the second arguments of the <code>set</code> statements that are 
-before the <code>project</code> statement and replace the values that are 
-currently there with values that are appropriate for your system / development 
+Alter the second argument of the line <code>set(NormalSystemLibraries "/usr/lib64")</code> statement 
+that is before the <code>project(sc)</code> statement and replace the value that is 
+currently there with value that is appropriate for your system / development 
 environment.
-<p>
-Just as a side note, I was not able to debug the native code with a debugger while 
-developing it.  Possibly since this code's job is to interface between code written
-in Java and the libraries provided in the LunarG Vulkan SDK. I had to debug the old fashioned way with print statements (<code>cout</code>), although now slf4j logging is available via the MACROs in the header file 
-<code>slf4j.hh</code>.  These MACROs are <code>LOGINFO</code>, <code>LOGDEBUG</code>, <code>LOGTRACE</code>, 
-<code>LOGWARN</code>, <code>LOGERROR</code>. The <code>Logger</code> used is 
-<code>&quot;jvulkan-natives&quot;</code> 
-so make sure it is configured into your <code>log4j2.xml</code>.
 
 To produce a debug version:
 
@@ -55,28 +68,33 @@ cd Release</br>
 cmake -DCMAKE_BUILD_TYPE=Release ..</br>
 make -j32 (You may leave out the -j option it just tells make how many cores it may use.)</br> </code>
 
-In both of these cases the file of interest is <code>libjvulkan-natives-Linux-x86_64.so</code>.
+In both of these cases the file of interest is <code>sc</code>. 
+
+## Documentation
+If you look in the <code>docs</code> directory you will see a file named 
+<code>sc&lowbar;users&lowbar;guide.odt</code>.  This file is the current version of the documentation. 
+At the moment it is incomplete because the original editable version of the documentation 
+is missing.  The file <code>sc&lowbar;users&lowbar;guide.pdf</code> is the original documentation in pdf 
+format. <code>sc&lowbar;users&lowbar;guide.odt</code> is currently being updated from this source.  Once 
+the process is complete a new version of <code>sc&lowbar;users&lowbar;guide.pdf</code> will be created 
+that will then be able to be updated as necessary.
+
+## Example sc programs
+If you look in the <code>examples</code> directory you will find some example programs 
+to peruse.  The example programs have a file extension of <code>.sc</code>, but, they 
+can use any extension name or even no extension name.
+
+# Running sc
+Refer to the **Getting Started** section in the documentation for a complete description 
+of how you run <code>sc</code>.  
+
+A very common way to start it in a development environment is with the command: 
+<br>
+<code>sc -i -c &quot;read my&lowbar;program&lowbar;file&quot;</code> 
+
+This will start <code>sc</code> which will attemp to load its &quot;program file&quot; file 
+that has a name of <code>my&lowbar;program&lowbar;file</code>...in this case a name without an extension.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
 
-Please do not reformat the source code for the existing code.  If you make additions, go ahead and format 
-the source files as you like.
-
-Please make sure to update tests as appropriate.  There are none at the moment for this project.
-
-In the event you are upgrading or adding to this software the command to recreate the 
-JNI header file for the native functions is:
-
-<code>javah -classpath my-jvulkan-project-path/src/main/java com.CIMthetics.jvulkan.VulkanCore.VK11.NativeProxies</code> 
-
-This will create the file <code>com&lowbar;CIMthetics&lowbar;jvulkan&lowbar;VulkanCore&lowbar;VK11&lowbar;NativeProxies.h</code> 
-that will need to be placed in the <code>headers</code> directory of 
-the **jvulkan-natives-Linux-x86_64** project on your machine.  You will then need to implement 
-any new functions you have added here in that project as well. 
-
-The value of &quot;my-jvulkan-project-path&quot; will be the path to where you have the **jvulkan** project stored 
-on your machine.
-
-## License
-[Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)
