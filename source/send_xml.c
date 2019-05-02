@@ -139,7 +139,11 @@ uint32_t recv_xml(const char *name, int fd, struct buffer *reply)
 	char *option = (char *)NULL;
 	uint8_t c = 0;
 	char tag[256];
+#ifdef __CYGWIN__
+  static sigjmp_buf timer;
+#else
 	static jmp_buf timer;
+#endif
 
 #undef NAME
 #define NAME "recv_xml()"

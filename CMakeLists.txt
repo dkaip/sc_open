@@ -13,6 +13,11 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     set(CMAKE_C_FLAGS_RELEASE "-O3 -std=gnu18 -I/usr/include -Wall -Wextra")
     set(CMAKE_C_FLAGS_DEBUG "-g -std=gnu18 -I/usr/include -Wall -Wextra")
 
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "CYGWIN")
+
+    set(CMAKE_C_FLAGS_RELEASE "-O3 -std=gnu18 -I/usr/include -Wall -Wextra")
+    set(CMAKE_C_FLAGS_DEBUG "-g -std=gnu18 -I/usr/include -Wall -Wextra")
+
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "HPUX")
 
     set(CMAKE_C_FLAGS_RELEASE "-O3 -Aa -DUNIX -DHP -DSYS5 -DHP700V807 -DHP9000v901 -DHP903 -DHP904 -D_HPUX_SOURCE -Wp -H20000")

@@ -223,8 +223,11 @@ uint32_t recv_hsmsI(const char *name, int fd, uint8_t *header, struct binary_buf
 //	uint8_t len[4] = {0, 0, 0, 0};
 	union U4Union u4_union;
 	uint8_t buf[MAX_READ];
-//static sigjmp_buf timer_t8;
+#ifdef __CYGWIN__
+  static sigjmp_buf timer_t8;
+#else
 	static jmp_buf timer_t8;
+#endif
 
 #undef NAME
 #define NAME "recv_hsmsI()"

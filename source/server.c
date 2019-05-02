@@ -62,10 +62,13 @@ static struct {
 
 static int maxfd;
 static unsigned int timeout_value;
-//static sigjmp_buf env_alrm;
-//static sigjmp_buf env_sigusr1;
+#ifdef __CYGWIN__
+static sigjmp_buf env_alrm;
+static sigjmp_buf env_sigusr1;
+#else
 static jmp_buf env_alrm;
 static jmp_buf env_sigusr1;
+#endif
 
 /********************************************/
 

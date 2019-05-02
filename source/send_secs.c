@@ -328,8 +328,11 @@ static uint32_t send_secsI(const char *name, int fd, uint8_t *block, uint8_t blo
 	uint32_t iret = 0;
 	uint8_t c = 0;
 	uint8_t cs[2];
-//static sigjmp_buf timer_t2;
+#ifdef __CYGWIN__
+  static sigjmp_buf timer_t2;
+ #else
 	static jmp_buf timer_t2;
+#endif
 
 #undef NAME
 #define NAME "send_secsI()"

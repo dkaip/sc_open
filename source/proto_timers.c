@@ -45,14 +45,22 @@ static struct
     time_t start;
     time_t end;
     int time;
+#ifdef __CYGWIN__
+    sigjmp_buf *env_alrm;
+#else
     jmp_buf *env_alrm;
-//    sigjmp_buf *env_alrm;
+#endif    
 } timers[MAX_TIMERS]; 
 
 /********************************************/
 
 //int start_proto_timer(int seconds, int idx, sigjmp_buf *env_alrm)
+//uint32_t start_proto_timer(uint32_t seconds, uint32_t idx, jmp_buf *env_alrm)
+#ifdef __CYGWIN__
+uint32_t start_proto_timer(uint32_t seconds, uint32_t idx, sigjmp_buf *env_alrm)
+#else
 uint32_t start_proto_timer(uint32_t seconds, uint32_t idx, jmp_buf *env_alrm)
+#endif
 {
 	uint32_t min_time = 0;
 

@@ -652,8 +652,11 @@ uint32_t cmd_close()
 
 static void flush_open(const char *name)
 {
-//sigjmp_buf flush_timer;
+#ifdef __CYGWIN__
+  sigjmp_buf flush_timer;
+#else
 	jmp_buf flush_timer;
+#endif
 	int flush_time = 0;
 	int fd = 0;;
 	uint8_t c = 0;

@@ -322,7 +322,11 @@ extern uint32_t open_trans_table_del(uint32_t, uint32_t *);
 
 /* proto_timers.c */
 //extern int start_proto_timer(int, int, sigjmp_buf *);
+#ifdef __CYGWIN__
+extern uint32_t start_proto_timer(uint32_t seconds, uint32_t idx, sigjmp_buf *env_alrm);
+#else
 extern uint32_t start_proto_timer(uint32_t seconds, uint32_t idx, jmp_buf *env_alrm);
+#endif
 //extern int start_proto_timer(int, int, jmp_buf *);
 extern uint32_t stop_proto_timer(uint32_t);
 extern void init_proto_timers();
@@ -330,7 +334,11 @@ extern void init_proto_timers();
 /* recv_secs.c */
 //extern uint32_t recv_secs(const char *, int, bool, int *, bool *);
 extern uint32_t recv_secs(const char *name, int fd, bool flag, uint32_t *program_idx, bool *primary_msg_flag);
+#ifdef __CYGWIN__
+extern int do_the_setsigjump(sigjmp_buf the_jump_buffer, int save_mask);
+#else
 extern int do_the_setsigjump(jmp_buf the_jump_buffer, int save_mask);
+#endif
 
 /* recv_hsms.c */
 //extern uint32_t recv_hsms(const char *, int fd, uint32_t *, bool *);

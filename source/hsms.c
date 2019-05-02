@@ -74,7 +74,11 @@ static uint32_t client_connect(const char *name, int fd)
 	uint32_t iret = 0;
 	uint32_t system_bytes = 0;
 //	static sigjmp_buf timer_t6;
+#ifdef __CYGWIN__
+	static sigjmp_buf timer_t6;
+#else
 	static jmp_buf timer_t6;
+#endif
 /* time_t t; */
 	struct binary_buffer body = INIT_BINARY_BUFFER;
 

@@ -176,7 +176,11 @@ uint32_t recv_standard(const char *name, int fd, struct buffer *reply)
 	char *option = (char *)NULL;
 	uint8_t byte = 0;
 	char c = 0;
+#ifdef __CYGWIN__
+  static sigjmp_buf timer;
+#else
 	static jmp_buf timer;
+#endif
 
 #undef NAME
 #define NAME "recv_standard()"

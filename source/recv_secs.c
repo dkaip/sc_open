@@ -57,8 +57,11 @@ uint32_t recv_secs(const char *name, int fd, bool flag, uint32_t *program_idx, b
 	uint8_t header[10] = {0};
 	uint8_t last_header[10] = {0};
 	uint8_t block[254] = {0};
-//static sigjmp_buf /*timer_t3, */timer_t4;
-static jmp_buf /*timer_t3, */timer_t4;
+#ifdef __CYGWIN__
+  static sigjmp_buf /*timer_t3, */timer_t4;
+#else
+  static jmp_buf /*timer_t3, */timer_t4;
+#endif
 struct binary_buffer encoded_secs_msg = INIT_BINARY_BUFFER;
 struct buffer log = INIT_BUFFER;
 struct buffer tmp_name = INIT_BUFFER;
@@ -296,8 +299,11 @@ static uint32_t recv_secsI(const char *name, int fd, uint8_t *block, uint8_t *bl
 	uint8_t size = 0;;
 	uint8_t c = 0;
 	uint8_t cs[2];
-//static sigjmp_buf timer_t1, timer_t2;
-static jmp_buf timer_t1, timer_t2;
+#ifdef __CYGWIN__
+  static sigjmp_buf timer_t1, timer_t2;
+#else
+  static jmp_buf timer_t1, timer_t2;
+#endif
 
 #undef NAME
 #define NAME "recv_secsI()"
@@ -498,8 +504,12 @@ static void completion(const char *name, int fd, uint32_t t1)
 {
 /*int i;*/
 	uint8_t c;
-//static sigjmp_buf timer_t1;
-static jmp_buf timer_t1;
+#ifdef __CYGWIN__
+  static sigjmp_buf timer_t1;
+#else
+  static jmp_buf timer_t1;
+#endif
+
 #undef NAME
 #define NAME "completion()"
 
@@ -526,7 +536,14 @@ static jmp_buf timer_t1;
     return; 
 }
 
+#ifdef __CYGWIN__
+int do_the_setsigjump(sigjmp_buf the_jump_buffer, int save_mask)
+{
+	return sigsetjmp(the_jump_buffer, save_mask);
+}
+#else
 int do_the_setsigjump(jmp_buf the_jump_buffer, int save_mask)
 {
 	return sigsetjmp(the_jump_buffer, save_mask);
 }
+#endif
