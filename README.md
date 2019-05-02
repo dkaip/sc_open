@@ -26,7 +26,7 @@ interface to be run against a fake version of the tool for debugging purposes.  
 allows for testing / debugging without putting product at risk. 
 
 Two running instances of <code>sc</code> can communicate with each other.  This is sometimes 
-used to develop both a host and an equipment interface at the same time.
+used to develop both a host interface and an equipment interface at the same time.
 
 In a production this application can be used to construct a robust automation layer for
 simpler CIM environments.  It is probably not going to be used in production in a 300mm or 
@@ -37,7 +37,7 @@ application stack.
 ## Get the code
 Use the <code>git clone</code> command to get the code. 
 
-<code>git https://github.com/dkaip/sc_open sc_open</code> 
+<code>git clone https://github.com/dkaip/sc_open sc_open</code> 
 
 This will create a <code>sc_open</code> directory in your current directory
 
@@ -68,7 +68,12 @@ cd Release</br>
 cmake -DCMAKE_BUILD_TYPE=Release ..</br>
 make -j32 (You may leave out the -j option it just tells make how many cores it may use.)</br> </code>
 
-In both of these cases the file of interest is <code>sc</code>. 
+Note: At this time **sc_open** has been successfully compiled in both a 64-bit Linux environment 
+and a 64-bit CYGWIN environment.  There will probably be a single warning if compiled in CYGWIN environment. The
+resulting executable seems to operate correctly though.  
+
+In both of these cases the file of interest is <code>sc</code> or <code>sc.exe</code> if 
+built on Windows in a Cygwin environment. 
 
 ## Documentation
 If you look in the <code>docs</code> directory you will see a file named 
@@ -86,14 +91,29 @@ can use any extension name or even no extension name.
 
 # Running sc
 Refer to the **Getting Started** section in the documentation for a complete description 
-of how you run <code>sc</code>.  
+of how to run <code>sc</code>.  
 
 A very common way to start it in a development environment is with the command: 
 <br>
 <code>sc -i -c &quot;read my&lowbar;program&lowbar;file&quot;</code> 
 
 This will start <code>sc</code> which will attemp to load its &quot;program file&quot; file 
-that has a name of <code>my&lowbar;program&lowbar;file</code>...in this case a name without an extension.
+that has a name of <code>my&lowbar;program&lowbar;file</code>. In this case a name without an extension.  
+
+Note for Windows users: 
+* If you are running <code>sc.exe</code> in a Cygwin terminal window it should work 
+just fine. 
+<p>
+* If running in a Windows environment using a Windows <code>Command Prompt</code> window 
+you will need the file <code>cygwin1.dll</code> in your <code>PATH</code> or have a 
+copy of it in the directory where the <code>sc.exe</code> file is.  In a 64-bit Cygwin environment 
+the file <code>cygwin1.dll</code> should be located in <code>cygwin64\bin</code> 
+(i.e. <code>c:\cygwin64\bin\cygwin1.dll</code>) unless you installed it in a different place.
+<p>
+Using the second option allows you to put <code>sc.exe</code> and <code>cygwin1.dll</code> 
+on a memory stick and be able to run <code>sc</code> on a Windows machine that does not have
+Cygwin installed on it.
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
