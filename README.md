@@ -28,7 +28,7 @@ allows for testing / debugging without putting product at risk.
 Two running instances of <code>sc</code> can communicate with each other.  This is sometimes 
 used to develop both a host interface and an equipment interface at the same time.
 
-In a production this application can be used to construct a robust automation layer for
+In a production environment this application can be used to construct a robust automation layer for
 simpler CIM environments.  It is probably not going to be used in production in a 300mm or 
 450mm environment due to the massive amount of automation framework up and down the 
 application stack.
